@@ -5,7 +5,6 @@ const url ="https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v
 function DrawBargraph(sampleId) {
     
     d3.json(url).then(data=> {
-        console.log(data);
 
         let samples=data.samples;
         let resultArray = samples.filter(s => s.id == sampleId);
@@ -88,15 +87,29 @@ function DrawGage(sampleId) {
     console.log(`DrawGage ${sampleId}`);
 };
 
+
+// Create a function that will display the sample metadata
 function ShowMetadata(sampleId) {
 
-    console.log(`ShowMetaData ${sampleId}`);
+    d3.json(url).then(data => {
+
+        let metadata = data.metadata;
+        let resultArray = metadata.filter(s => s.id == sampleId);
+        let result = resultArray[0];
+
+        let display = d3.select("#sample-metadata");
+        display.html("");
+
+        Object.entries(result).forEach(([key,value])=> {
+            display.append("h6").text(`${key}: ${value}`);
+        });    
+
+    });
+
 };
 
 //Creating an event handler for when the number in the dropdown changes
 function optionChanged(sampleId) {
-
-    console.log(`optionChanged: ${sampleId}`);
 
     DrawBargraph(sampleId);
     DrawBubblePlot(sampleId);
@@ -105,6 +118,8 @@ function optionChanged(sampleId) {
 
 };
 
+
+// Creating a function that will make the dashboard
 function InitDashboard ()
 {
     //Get a handle to the dropdown
@@ -124,8 +139,6 @@ function InitDashboard ()
 
         //Read current value from dropdown
         let initialId = selector.property("value");
-        console.log(`initialId = ${initialId}`);
-
 
         //draw bargraph for id
         DrawBargraph(initialId);
