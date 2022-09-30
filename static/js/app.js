@@ -83,10 +83,6 @@ function DrawBubblePlot(sampleId) {
 
 };
 
-function DrawGage(sampleId) {
-    console.log(`DrawGage ${sampleId}`);
-};
-
 
 // Create a function that will display the sample metadata
 function ShowMetadata(sampleId) {
@@ -113,7 +109,6 @@ function optionChanged(sampleId) {
 
     DrawBargraph(sampleId);
     DrawBubblePlot(sampleId);
-    DrawGage(sampleId);
     ShowMetadata(sampleId);
 
 };
@@ -145,9 +140,6 @@ function InitDashboard ()
 
         //draw bubblechart for id
         DrawBubblePlot(initialId);
-
-        //draw gage
-        DrawGage(initialId);
 
         //show metadata for id
         ShowMetadata(initialId);
